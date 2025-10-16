@@ -11,12 +11,10 @@ Provision an EC2 instance, alb, and create an autostopping rule for the instance
 3. [Configure Harness authentication](https://registry.terraform.io/providers/harness/harness/latest/docs) for Terraform
     a. `HARNESS_ACCOUNT_ID`: your Harness account id
     b. `HARNESS_PLATFORM_API_KEY`: an api key for your Harness account, with CCM admin permissions
-4. Run `tofu plan` and `tofu apply` to create the application
-    a. Provision an ec2 machine with nginx insalled
-    b. Provision an ALB and create a rule for routing to the VM
-    c. Create a Harness Lb with the ALB (import)
-    d. Create an AutoStopping Rule for the VM
-5. Once the TF completes, you will need to modify the rule in the Harness UI to link your rule to the route53 record.
+4. Run OpenTofu to create the AWS resources using the `-exclude` flag to exclude the Harness resources
+    a. Provision an alb, listener, and target group for the ec2 machine with nginx insalled `tofu apply -exclude=harness_autostopping_aws_alb.harness_alb -exclude=harness_autostopping_rule_vm.rule`
+    b. Validate the alb is working by accessing the url in your browser
+    c. Import the ALB into harness and create the autostopping rule by running a full `tofu apply`
 
 ![image](https://github.com/wings-software/AutoStoppingLab/assets/7338312/ab1a3163-3657-4244-833b-7e8ccb4b176b)
 
