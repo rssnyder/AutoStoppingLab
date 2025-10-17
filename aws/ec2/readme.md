@@ -2,7 +2,7 @@
 
 Provision an EC2 instance, alb, and create an autostopping rule for the instance.
 
-![image](https://github.com/wings-software/AutoStoppingLab/assets/7338312/7ede2ec4-45a3-43ff-95d6-60abbaaea64d)
+<img width="2091" height="1334" alt="image" src="https://github.com/user-attachments/assets/8d6caff8-75ed-4d4a-9774-1141c414c788" />
 
 ## Setup
 
@@ -15,8 +15,6 @@ Provision an EC2 instance, alb, and create an autostopping rule for the instance
     a. Provision an alb, listener, and target group for the ec2 machine with nginx insalled `tofu apply -exclude=harness_autostopping_aws_alb.harness_alb -exclude=harness_autostopping_rule_vm.rule`
     b. Validate the alb is working by accessing the url in your browser
     c. Import the ALB into harness and create the autostopping rule by running a full `tofu apply`
-
-![image](https://github.com/wings-software/AutoStoppingLab/assets/7338312/ab1a3163-3657-4244-833b-7e8ccb4b176b)
 
 ## Requirements
 
