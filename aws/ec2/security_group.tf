@@ -1,6 +1,6 @@
 # Security group for the instance
 resource "aws_security_group" "allow_http" {
-  name        = "${local.name}-ec2-allow_http"
+  name        = "${local.name}-allow_http"
   description = "Allow HTTP inbound traffic"
   vpc_id      = var.vpc
 

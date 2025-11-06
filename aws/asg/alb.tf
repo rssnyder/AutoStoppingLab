@@ -26,7 +26,7 @@ resource "aws_security_group" "http" {
   }
 }
 
-# provision an ALB that routes traffic to our asg
+# provision an ALB that routes traffic to our instance
 resource "aws_lb" "alb" {
   count              = var.alb_arn == null ? 1 : 0
   name               = "${local.name}-lb"
@@ -37,7 +37,7 @@ resource "aws_lb" "alb" {
 }
 
 # configure a listener for our ALB that accepts traffic on port 80 and forwards it to our target group
-resource "aws_lb_listener" "asg" {
+resource "aws_lb_listener" "http" {
   load_balancer_arn = var.alb_arn == null ? aws_lb.alb[0].arn : var.alb_arn
   port              = "80"
   protocol          = "HTTP"
@@ -49,7 +49,7 @@ resource "aws_lb_listener" "asg" {
 }
 
 # configure a listener rule for our ALB that forwards traffic to our target group
-resource "aws_lb_listener_rule" "static" {
+resource "aws_lb_listener_rule" "target" {
   listener_arn = aws_lb_listener.asg.arn
   priority     = 100
 
@@ -67,7 +67,7 @@ resource "aws_lb_listener_rule" "static" {
 
 # configure a target group for our ALB that forwards traffic to our asg on port 80
 resource "aws_lb_target_group" "http" {
-  name     = "${local.name}-asg-tg"
+  name     = "${local.name}-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc
@@ -76,5 +76,5 @@ resource "aws_lb_target_group" "http" {
 # attach our ASG to the target group
 resource "aws_autoscaling_attachment" "asg" {
   autoscaling_group_name = aws_autoscaling_group.asg.name
-  lb_target_group_arn = aws_lb_target_group.http.arn
+  lb_target_group_arn    = aws_lb_target_group.http.arn
 }

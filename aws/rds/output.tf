@@ -1,15 +1,19 @@
 output "name" {
-  value = local.name
+  value       = local.name
+  description = "Name of the ec2 instance"
 }
 
-output "db" {
-  value = var.rds_arn == "" ? aws_db_instance.rds[0].arn : var.rds_arn
+output "ec2" {
+  value       = aws_instance.ec2.arn
+  description = "ARN of the ec2 instance"
 }
 
 output "rule" {
-  value = "https://app.harness.io/ng/account/<harness account id>/ce/autostopping-rules/rule/${harness_autostopping_rule_rds.rule.id}"
+  value       = "https://app.harness.io/ng/account/${data.harness_platform_current_account.current.id}/ce/autostopping-rules/rule/${harness_autostopping_rule_vm.rule.id}"
+  description = "Link to autostopping rule in Harness"
 }
 
-output "connect" {
-  value = "mysql --host=<proxy public ip>.nip.io --port=${random_integer.public_rds_port.result} --user=${var.dbuser} -p'${var.dbcred}'"
+output "url" {
+  value       = harness_autostopping_rule_vm.rule.custom_domains[0]
+  description = "URL for the application"
 }

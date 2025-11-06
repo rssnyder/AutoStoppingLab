@@ -1,35 +1,49 @@
 variable "name" {
   type        = string
   description = "A unique key to use for all resource. If not set a random name is generated"
-  default     = ""
+  default     = null
 }
 
-variable "subnets" {
-  type    = list(string)
-  default = ["subnet-682a8223", "subnet-e357d99a", "subnet-bef497e4"]
+variable "alb_subnets" {
+  type        = list(string)
+  description = "Subnet to place ALB in. Should be routable so you can access the application"
+}
+
+variable "ec2_subnet" {
+  type        = string
+  description = "Subnet to place EC2 in"
 }
 
 variable "vpc" {
-  type    = string
-  default = "vpc-51edc228"
+  type        = string
+  description = "ID of existing VPC"
 }
 
 variable "region" {
-  type    = string
-  default = "us-west-2"
+  type        = string
+  default     = "us-west-2"
+  description = "AWS region to deploy resources in"
+}
+
+variable "ami" {
+  type        = string
+  default     = "ami-0efcece6bed30fd98"
+  description = "Ubuntu ami (default is for us-west-2)"
 }
 
 variable "hostedzone" {
-  type    = string
-  default = "Z2X614CI8JN37A"
+  type        = string
+  default     = null
+  description = "Hosted zone id to use for application routing. If not set will use default ALB url"
 }
 
-variable "task_exec_role" {
-  type    = string
-  default = "arn:aws:iam::759984737373:role/ecsTaskExecutionRole"
+variable "alb_arn" {
+  type        = string
+  description = "An existing ALB arn to use. If not set one will be created for you"
+  default     = null
 }
 
 variable "harness_cloud_connector_id" {
   type    = string
-  default = "SE_AWS_CCM_Connector"
+  default = "AWS CCM connector for target AWS account"
 }

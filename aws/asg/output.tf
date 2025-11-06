@@ -1,11 +1,11 @@
 output "name" {
   value       = local.name
-  description = "Name of the ec2 instance"
+  description = "Name of the asg"
 }
 
-output "ec2" {
-  value       = aws_instance.ec2.arn
-  description = "ARN of the ec2 instance"
+output "asg" {
+  value       = aws_autoscaling_group.asg.arn
+  description = "ARN of the asg"
 }
 
 output "rule" {
