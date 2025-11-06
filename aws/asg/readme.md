@@ -1,6 +1,8 @@
-# AWS - EC2
+# AWS - ASG
 
-Provision an ec2, alb, and create an autostopping rule for the instance.
+Provision an asg, alb, and create an autostopping rule for the scaling group.
+
+WARNING: this demo does not work yet as creating asg rules is not currently supported in the provider
 
 <img width="2091" height="1334" alt="image" src="https://github.com/user-attachments/assets/8d6caff8-75ed-4d4a-9774-1141c414c788" />
 

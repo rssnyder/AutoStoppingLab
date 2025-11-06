@@ -1,49 +1,49 @@
 variable "name" {
-  type    = string
-  default = "test-tf"
+  type        = string
+  description = "A unique key to use for all resource. If not set a random name is generated"
+  default     = null
 }
 
-variable "subnets" {
-  type    = list(string)
-  default = ["subnet-e6e3c9ad", "subnet-bb7be890", "subnet-b96873e3"]
+variable "alb_subnets" {
+  type        = list(string)
+  description = "Subnet to place ALB in. Should be routable so you can access the application"
+}
+
+variable "ec2_subnet" {
+  type        = string
+  description = "Subnet to place EC2 in"
 }
 
 variable "vpc" {
-  type    = string
-  default = "vpc-c1e05fb9"
-}
-variable "region" {
-  type    = string
-  default = "us-west-2"
-}
-variable "ami" {
-  type    = string
-  default = "ami-0efcece6bed30fd98"
-}
-variable "availability_zones" {
-  type = list(string)
-  default = [ "us-west-2c","us-west-2b" ]
-}
-variable "hostedzone" {
-  type    = string
-  default = "/hostedzone/Z06070943NA512B2KHEHF"
-}
-# HARNESS Variables
-variable "account_id" {
-  type    = string
-  default = "wOSgd9G8SuajZo1dISEF2g"
-}
-variable "cloud_connector_id" {
-  type    = string
-  default = "Lightwing_Non_Prod"
-}
-variable "api_key" {
-  type    = string
-  default = "Set the env variable TF_VAR_api_key"
+  type        = string
+  description = "ID of existing VPC"
 }
 
-locals {
-  tags = {
-    lb_hostname = "${var.name}.lightwingtest.com"
-  }
+variable "region" {
+  type        = string
+  default     = "us-west-2"
+  description = "AWS region to deploy resources in"
+}
+
+variable "ami" {
+  type        = string
+  default     = "ami-0efcece6bed30fd98"
+  description = "Ubuntu ami (default is for us-west-2)"
+}
+
+variable "hostedzone" {
+  type        = string
+  default     = null
+  description = "Hosted zone id to use for application routing. If not set will use default ALB url"
+}
+
+variable "alb_arn" {
+  type        = string
+  description = "An existing ALB arn to use. If not set one will be created for you"
+  default     = null
+}
+
+variable "harness_cloud_connector_id" {
+  type    = string
+  default = "AWS CCM connector for target AWS account"
 }
