@@ -13,7 +13,7 @@ Provision an ec2, alb, and create an autostopping rule for the instance.
     b. `HARNESS_PLATFORM_API_KEY`: an api key for your Harness account, with access to create autostopping rules with the specific ccm aws connector
 4. Create the resources with `tofu aply`
     a. You can create the resources in two parts to test the application before and after harness integration.
-    b. Run OpenTofu to create the AWS resources using the `-exclude` flag to exclude the Harness resources `tofu apply -exclude=harness_autostopping_aws_alb.harness_alb -exclude=harness_autostopping_rule_vm.rule`
+    b. Run OpenTofu to create the AWS resources using the `-exclude` flag to exclude the Harness resources `tofu apply -exclude=harness_autostopping_aws_alb.harness_alb -exclude=harness_autostopping_rule_ecs.rule`
     b. Validate the alb is working by accessing the url in your browser
     c. Import the ALB into harness and create the autostopping rule by running a full `tofu apply`
 

@@ -1,3 +1,52 @@
+resource "aws_iam_role" "ecs" {
+  name = "${local.name}_ecs_task"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "ecs" {
+  name = "${local.name}_ecs_task"
+  role = aws_iam_role.ecs.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "ecr:BatchCheckLayerAvailability",
+              "ecr:GetDownloadUrlForLayer",
+              "ecr:BatchGetImage",
+              "ecr:GetAuthorizationToken"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+              "logs:CreateLogStream",
+              "logs:PutLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+POLICY
+}
+
 resource "aws_ecs_cluster" "cluster" {
   name = local.name
 }
@@ -27,7 +76,7 @@ resource "aws_ecs_task_definition" "task" {
       ],
     }
   ])
-  execution_role_arn       = var.task_exec_role
+  execution_role_arn       = aws_iam_role.ecs.arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
@@ -38,12 +87,12 @@ resource "aws_ecs_task_definition" "task" {
 resource "aws_ecs_service" "service" {
   name             = local.name
   cluster          = aws_ecs_cluster.cluster.id
-  task_definition  = aws_ecs_task_definition.service.arn
+  task_definition  = aws_ecs_task_definition.task.arn
   desired_count    = 1
   launch_type      = "FARGATE"
   platform_version = "LATEST"
   network_configuration {
-    subnets          = var.subnets
+    subnets          = var.ecs_subnets
     security_groups  = [aws_security_group.allow_http.id]
     assign_public_ip = true
   }

@@ -50,7 +50,7 @@ resource "aws_lb_listener" "http" {
 
 # configure a listener rule for our ALB that forwards traffic to our target group
 resource "aws_lb_listener_rule" "target" {
-  listener_arn = aws_lb_listener.ec2.arn
+  listener_arn = aws_lb_listener.http.arn
   priority     = 100
 
   action {
@@ -67,15 +67,9 @@ resource "aws_lb_listener_rule" "target" {
 
 # configure a target group for our ALB that forwards traffic to our EC2 on port 80
 resource "aws_lb_target_group" "http" {
-  name     = "${local.name}-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = var.vpc
-}
-
-# attach our instance to the target group
-resource "aws_lb_target_group_attachment" "ec2" {
-  target_group_arn = aws_lb_target_group.http.arn
-  target_id        = aws_instance.ec2.id
-  port             = 80
+  name        = "${local.name}-tg"
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = var.vpc
 }

@@ -9,9 +9,9 @@ variable "alb_subnets" {
   description = "Subnet to place ALB in. Should be routable so you can access the application"
 }
 
-variable "ec2_subnet" {
-  type        = string
-  description = "Subnet to place EC2 in"
+variable "ecs_subnets" {
+  type        = list(string)
+  description = "Subnet to place ECS in"
 }
 
 variable "vpc" {
