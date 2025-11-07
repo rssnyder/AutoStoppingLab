@@ -1,6 +1,6 @@
-# AWS - EC2
+# AWS - ECS
 
-Provision an ec2, alb, and create an autostopping rule for the instance.
+Provision an ecs, alb, and create an autostopping rule for the instance.
 
 <img width="2091" height="1334" alt="image" src="https://github.com/user-attachments/assets/8d6caff8-75ed-4d4a-9774-1141c414c788" />
 
@@ -28,9 +28,9 @@ Provision an ec2, alb, and create an autostopping rule for the instance.
 
 | Name | Version |
 |------|---------|
-| aws | 5.94.1 |
+| aws | 5.100.0 |
 | harness | 0.37.1 |
-| random | 3.7.1 |
+| random | 3.7.2 |
 
 ## Modules
 
@@ -40,17 +40,20 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_instance.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
+| [aws_ecs_cluster.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster) | resource |
+| [aws_ecs_service.service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
+| [aws_ecs_task_definition.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
+| [aws_iam_role.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy) | resource |
 | [aws_lb.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
-| [aws_lb_listener.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
-| [aws_lb_listener_rule.static](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
+| [aws_lb_listener.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_lb_listener_rule.target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
 | [aws_lb_target_group.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
-| [aws_lb_target_group_attachment.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group_attachment) | resource |
 | [aws_route53_record.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_security_group.allow_http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [harness_autostopping_aws_alb.harness_alb](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_aws_alb) | resource |
-| [harness_autostopping_rule_vm.rule](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_rule_vm) | resource |
+| [harness_autostopping_rule_ecs.rule](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_rule_ecs) | resource |
 | [random_pet.name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [aws_route53_zone.zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 | [harness_platform_current_account.current](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/data-sources/platform_current_account) | data source |
@@ -62,7 +65,7 @@ No modules.
 | alb\_arn | An existing ALB arn to use. If not set one will be created for you | `string` | `null` | no |
 | alb\_subnets | Subnet to place ALB in. Should be routable so you can access the application | `list(string)` | n/a | yes |
 | ami | Ubuntu ami (default is for us-west-2) | `string` | `"ami-0efcece6bed30fd98"` | no |
-| ec2\_subnet | Subnet to place EC2 in | `string` | n/a | yes |
+| ecs\_subnets | Subnet to place ECS in | `list(string)` | n/a | yes |
 | harness\_cloud\_connector\_id | n/a | `string` | `"AWS CCM connector for target AWS account"` | no |
 | hostedzone | Hosted zone id to use for application routing. If not set will use default ALB url | `string` | `null` | no |
 | name | A unique key to use for all resource. If not set a random name is generated | `string` | `null` | no |
@@ -73,7 +76,8 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| ec2 | ARN of the ec2 instance |
+| alb-url | URL of the ALB |
 | name | Name of the ec2 instance |
 | rule | Link to autostopping rule in Harness |
+| service | ARN of the ECS service |
 | url | URL for the application |

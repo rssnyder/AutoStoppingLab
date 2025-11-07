@@ -28,9 +28,9 @@ Provision an ec2, alb, and create an autostopping rule for the instance.
 
 | Name | Version |
 |------|---------|
-| aws | 5.94.1 |
+| aws | 5.100.0 |
 | harness | 0.37.1 |
-| random | 3.7.1 |
+| random | 3.7.2 |
 
 ## Modules
 
@@ -42,8 +42,8 @@ No modules.
 |------|------|
 | [aws_instance.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
 | [aws_lb.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
-| [aws_lb_listener.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
-| [aws_lb_listener_rule.static](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
+| [aws_lb_listener.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_lb_listener_rule.target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
 | [aws_lb_target_group.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_lb_target_group_attachment.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group_attachment) | resource |
 | [aws_route53_record.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
@@ -73,6 +73,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| alb-url | URL of the ALB |
 | ec2 | ARN of the ec2 instance |
 | name | Name of the ec2 instance |
 | rule | Link to autostopping rule in Harness |

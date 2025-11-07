@@ -7,7 +7,7 @@ resource "aws_launch_template" "template" {
 
 resource "aws_autoscaling_group" "asg" {
   name               = "${var.name}-asg"
-  availability_zones = var.availability_zones
+  availability_zones = var.asg_subnets
   desired_capacity   = 2
   max_size           = 3
   min_size           = 1
