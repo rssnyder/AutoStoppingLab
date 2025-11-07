@@ -1,12 +1,13 @@
 locals {
-  name = var.name == null ? random_pet.name.id : lower(var.name)
+  name    = var.name == null ? random_pet.name.id : lower(var.name)
+  db_port = 5432
 }
 
 data "harness_platform_current_account" "current" {}
 
 resource "random_pet" "name" {
   keepers = {
-    ami = var.ami
+    name = var.name
   }
 }
 

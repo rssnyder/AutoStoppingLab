@@ -6,8 +6,8 @@ resource "aws_security_group" "allow_mysql" {
 
   ingress {
     description = "Open MYSQL"
-    from_port   = 3306
-    to_port     = 3306
+    from_port   = local.db_port
+    to_port     = local.db_port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -32,7 +32,7 @@ resource "aws_security_group" "allow_proxy" {
   vpc_id      = var.vpc
 
   ingress {
-    description = "Open port for ${name}"
+    description = "Open port for ${local.name}"
     from_port   = random_integer.public_port.result
     to_port     = random_integer.public_port.result
     protocol    = "tcp"

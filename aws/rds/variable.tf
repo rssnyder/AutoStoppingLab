@@ -5,13 +5,13 @@ variable "name" {
 }
 
 variable "proxy_subnet" {
-  type        = list(string)
+  type        = string
   description = "Subnet to place proxy in. Should be routable so you can access the application"
 }
 
-variable "rds_subnet" {
-  type        = string
-  description = "Subnet to place RDS in"
+variable "rds_subnets" {
+  type        = list(string)
+  description = "Subnets to place RDS in"
 }
 
 variable "vpc" {
@@ -28,4 +28,10 @@ variable "region" {
 variable "harness_cloud_connector_id" {
   type    = string
   default = "AWS CCM connector for target AWS account"
+}
+
+variable "harness_proxy_api_key" {
+  type      = string
+  default   = "pat.AM8HCbDiTXGQNrTIhNl7qQ.68bee55116344d7b8dad4ff7.Oni91Bw4TiGGjRXtwEeG"
+  sensitive = true
 }
