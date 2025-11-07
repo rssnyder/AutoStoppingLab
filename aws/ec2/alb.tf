@@ -50,7 +50,7 @@ resource "aws_lb_listener" "http" {
 
 # configure a listener rule for our ALB that forwards traffic to our target group
 resource "aws_lb_listener_rule" "target" {
-  listener_arn = aws_lb_listener.ec2.arn
+  listener_arn = aws_lb_listener.http.arn
   priority     = 100
 
   action {
