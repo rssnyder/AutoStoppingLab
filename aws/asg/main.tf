@@ -9,6 +9,10 @@ locals {
 
 data "harness_platform_current_account" "current" {}
 
+data "aws_subnet" "asg_subnet" {
+  id = var.asg_subnet
+}
+
 data "aws_route53_zone" "zone" {
   count   = var.hostedzone == null ? 0 : 1
   zone_id = var.hostedzone

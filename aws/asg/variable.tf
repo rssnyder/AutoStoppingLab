@@ -9,8 +9,8 @@ variable "alb_subnets" {
   description = "Subnet to place ALB in. Should be routable so you can access the application"
 }
 
-variable "asg_subnets" {
-  type        = list(string)
+variable "asg_subnet" {
+  type        = string
   description = "Subnet to place ASG in"
 }
 

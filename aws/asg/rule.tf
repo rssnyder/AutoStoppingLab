@@ -12,6 +12,43 @@ resource "harness_autostopping_aws_alb" "harness_alb" {
   delete_cloud_resources_on_destroy = false
 }
 
+resource "harness_autostopping_rule_scale_group" "rule" {
+  name               = local.name
+  cloud_connector_id = var.harness_cloud_connector_id
+  idle_time_mins     = 5
+  scale_group {
+    id        = aws_autoscaling_group.asg.id
+    name      = aws_autoscaling_group.asg.name
+    region    = var.region
+    desired   = aws_autoscaling_group.asg.desired_capacity
+    min       = aws_autoscaling_group.asg.min_size
+    max       = aws_autoscaling_group.asg.max_size
+    on_demand = aws_autoscaling_group.asg.desired_capacity
+  }
+  http {
+    proxy_id = harness_autostopping_aws_alb.harness_alb.identifier
+    routing {
+      # these are how traffic comes into the alb
+      source_protocol = lower(aws_lb_target_group.http.protocol)
+      source_port     = aws_lb_target_group.http.port
+      # these are how traffic goes out of the alb to the ec2
+      target_protocol = lower(aws_lb_target_group.http.protocol)
+      target_port     = 80
+      action          = "forward"
+    }
+    # this should be configured to match the target group health check
+    health {
+      protocol         = lower(aws_lb_target_group.http.protocol)
+      port             = 80
+      path             = "/"
+      timeout          = 30
+      status_code_from = 200
+      status_code_to   = 299
+    }
+  }
+  custom_domains = [local.lb_hostname]
+}
+
 # resource "harness_autostopping_rule_vm" "rule" {
 #   name               = "${local.name}-ec2-rule"
 #   cloud_connector_id = var.harness_cloud_connector_id
