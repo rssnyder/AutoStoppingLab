@@ -1,8 +1,9 @@
 terraform {
   required_providers {
     harness = {
-      source  = "harness/harness"
-      version = "0.28.3"
+      source = "harness/harness"
+      # must be at least 0.39.1 for asg support
+      version = ">= 0.39.1"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -10,11 +11,10 @@ terraform {
     }
   }
 }
-provider "harness" {
-  account_id       = var.account_id
-  platform_api_key = var.api_key
-}
+
+provider "harness" {}
 
 provider "aws" {
   region = var.region
 }
+

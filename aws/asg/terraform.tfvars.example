@@ -1,0 +1,11 @@
+# name = "stoptest"
+
+alb_subnets = ["subnet-08515090d18fe4e56", "subnet-0afa8a1877a19c619"]
+
+ec2_subnet = "subnet-022b0cf63cfa2b43e"
+
+vpc = "vpc-02767cb7b8b634d54"
+
+ami = "ami-075686beab831bb7f"
+
+harness_cloud_connector_id = "harness_impeng_play_ccm"

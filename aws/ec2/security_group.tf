@@ -1,6 +1,6 @@
 # Security group for the instance
 resource "aws_security_group" "allow_http" {
-  name        = "${local.name}-instance-allow_http"
+  name        = "${local.name}-allow_http"
   description = "Allow HTTP inbound traffic"
   vpc_id      = var.vpc
 
@@ -8,13 +8,6 @@ resource "aws_security_group" "allow_http" {
     description = "Open HTTP"
     from_port   = 80
     to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    description = "Open SSH"
-    from_port   = 22
-    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

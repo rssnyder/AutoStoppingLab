@@ -13,7 +13,7 @@ resource "harness_autostopping_aws_alb" "harness_alb" {
 }
 
 resource "harness_autostopping_rule_vm" "rule" {
-  name               = "${local.name}-ec2-rule"
+  name               = local.name
   cloud_connector_id = var.harness_cloud_connector_id
   idle_time_mins     = 5
   filter {

@@ -26,7 +26,7 @@ resource "aws_security_group" "http" {
   }
 }
 
-# provision an ALB that routes traffic to our EC2
+# provision an ALB that routes traffic to our instance
 resource "aws_lb" "alb" {
   count              = var.alb_arn == null ? 1 : 0
   name               = "${local.name}-lb"
@@ -37,7 +37,7 @@ resource "aws_lb" "alb" {
 }
 
 # configure a listener for our ALB that accepts traffic on port 80 and forwards it to our target group
-resource "aws_lb_listener" "ec2" {
+resource "aws_lb_listener" "http" {
   load_balancer_arn = var.alb_arn == null ? aws_lb.alb[0].arn : var.alb_arn
   port              = "80"
   protocol          = "HTTP"
@@ -49,8 +49,8 @@ resource "aws_lb_listener" "ec2" {
 }
 
 # configure a listener rule for our ALB that forwards traffic to our target group
-resource "aws_lb_listener_rule" "static" {
-  listener_arn = aws_lb_listener.ec2.arn
+resource "aws_lb_listener_rule" "target" {
+  listener_arn = aws_lb_listener.http.arn
   priority     = 100
 
   action {
@@ -67,13 +67,13 @@ resource "aws_lb_listener_rule" "static" {
 
 # configure a target group for our ALB that forwards traffic to our EC2 on port 80
 resource "aws_lb_target_group" "http" {
-  name     = "${local.name}-ec2-tg"
+  name     = "${local.name}-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc
 }
 
-# attach our EC2 to the target group
+# attach our instance to the target group
 resource "aws_lb_target_group_attachment" "ec2" {
   target_group_arn = aws_lb_target_group.http.arn
   target_id        = aws_instance.ec2.id

@@ -3,6 +3,11 @@ output "name" {
   description = "Name of the ec2 instance"
 }
 
+output "alb-url" {
+  value       = "http://${aws_lb.alb[0].dns_name}"
+  description = "URL of the ALB"
+}
+
 output "ec2" {
   value       = aws_instance.ec2.arn
   description = "ARN of the ec2 instance"
@@ -14,6 +19,6 @@ output "rule" {
 }
 
 output "url" {
-  value       = harness_autostopping_rule_vm.rule.custom_domains[0]
+  value       = "http://${harness_autostopping_rule_vm.rule.custom_domains[0]}"
   description = "URL for the application"
 }

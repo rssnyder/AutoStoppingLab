@@ -1,50 +1,37 @@
 variable "name" {
   type        = string
   description = "A unique key to use for all resource. If not set a random name is generated"
-  default     = ""
+  default     = null
 }
 
-variable "subnets" {
-  type    = list(string)
-  default = ["subnet-682a8223", "subnet-e357d99a", "subnet-bef497e4"]
+variable "proxy_subnet" {
+  type        = string
+  description = "Subnet to place proxy in. Should be routable so you can access the application"
+}
+
+variable "rds_subnets" {
+  type        = list(string)
+  description = "Subnets to place RDS in"
 }
 
 variable "vpc" {
-  type    = string
-  default = "vpc-51edc228"
+  type        = string
+  description = "ID of existing VPC"
 }
 
 variable "region" {
-  type    = string
-  default = "us-west-2"
-}
-
-variable "rds_arn" {
   type        = string
-  description = "If you have an existing RDS to use set the arn here. Otherwise one will be created for you"
-  default     = ""
-}
-
-variable "rds_port" {
-  type    = number
-  default = 3306
-}
-
-variable "proxy_id" {
-  type = string
-}
-
-variable "dbuser" {
-  type    = string
-  default = "harness"
-}
-
-variable "dbcred" {
-  type    = string
-  default = "H$rn3ssTerraformTest"
+  default     = "us-west-2"
+  description = "AWS region to deploy resources in"
 }
 
 variable "harness_cloud_connector_id" {
   type    = string
-  default = "SE_AWS_CCM_Connector"
+  default = "AWS CCM connector for target AWS account"
+}
+
+variable "harness_proxy_api_key" {
+  type      = string
+  default   = "pat.AM8HCbDiTXGQNrTIhNl7qQ.68bee55116344d7b8dad4ff7.Oni91Bw4TiGGjRXtwEeG"
+  sensitive = true
 }

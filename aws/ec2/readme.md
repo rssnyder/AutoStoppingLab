@@ -1,6 +1,6 @@
 # AWS - EC2
 
-Provision an EC2 instance, alb, and create an autostopping rule for the instance.
+Provision an ec2, alb, and create an autostopping rule for the instance.
 
 <img width="2091" height="1334" alt="image" src="https://github.com/user-attachments/assets/8d6caff8-75ed-4d4a-9774-1141c414c788" />
 
@@ -10,9 +10,10 @@ Provision an EC2 instance, alb, and create an autostopping rule for the instance
 2. [Configure AWS authentication](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration) for Terraform
 3. [Configure Harness authentication](https://registry.terraform.io/providers/harness/harness/latest/docs) for Terraform
     a. `HARNESS_ACCOUNT_ID`: your Harness account id
-    b. `HARNESS_PLATFORM_API_KEY`: an api key for your Harness account, with CCM admin permissions
-4. Run OpenTofu to create the AWS resources using the `-exclude` flag to exclude the Harness resources
-    a. Provision an alb, listener, and target group for the ec2 machine with nginx insalled `tofu apply -exclude=harness_autostopping_aws_alb.harness_alb -exclude=harness_autostopping_rule_vm.rule`
+    b. `HARNESS_PLATFORM_API_KEY`: an api key for your Harness account, with access to create autostopping rules with the specific ccm aws connector
+4. Create the resources with `tofu aply`
+    a. You can create the resources in two parts to test the application before and after harness integration.
+    b. Run OpenTofu to create the AWS resources using the `-exclude` flag to exclude the Harness resources `tofu apply -exclude=harness_autostopping_aws_alb.harness_alb -exclude=harness_autostopping_rule_vm.rule`
     b. Validate the alb is working by accessing the url in your browser
     c. Import the ALB into harness and create the autostopping rule by running a full `tofu apply`
 
@@ -27,9 +28,9 @@ Provision an EC2 instance, alb, and create an autostopping rule for the instance
 
 | Name | Version |
 |------|---------|
-| aws | 5.94.1 |
+| aws | 5.100.0 |
 | harness | 0.37.1 |
-| random | 3.7.1 |
+| random | 3.7.2 |
 
 ## Modules
 
@@ -41,8 +42,8 @@ No modules.
 |------|------|
 | [aws_instance.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
 | [aws_lb.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb) | resource |
-| [aws_lb_listener.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
-| [aws_lb_listener_rule.static](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
+| [aws_lb_listener.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
+| [aws_lb_listener_rule.target](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
 | [aws_lb_target_group.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_lb_target_group_attachment.ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group_attachment) | resource |
 | [aws_route53_record.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
@@ -72,6 +73,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| alb-url | URL of the ALB |
 | ec2 | ARN of the ec2 instance |
 | name | Name of the ec2 instance |
 | rule | Link to autostopping rule in Harness |
