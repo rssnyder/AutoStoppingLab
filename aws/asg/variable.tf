@@ -47,3 +47,19 @@ variable "harness_cloud_connector_id" {
   type    = string
   default = "AWS CCM connector for target AWS account"
 }
+
+variable "autostopping_schedules" {
+  type = list(object({
+    days       = list(string)
+    start_time = string
+    end_time   = string
+  }))
+  default     = null
+  description = "Optional list of schedule repeat windows. If null, no Harness autostopping schedule will be created."
+}
+
+variable "schedule_time_zone" {
+  type        = string
+  description = "Timezone for uptime schedule"
+  default     = "America/Chicago"
+}
