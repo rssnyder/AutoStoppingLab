@@ -51,7 +51,7 @@ resource "harness_autostopping_rule_scale_group" "rule" {
 
 resource "harness_autostopping_schedule" "this" {
   count         = var.autostopping_schedules == null || length(var.autostopping_schedules) == 0 ? 0 : 1
-  name          = "usworkhours"
+  name          = var.schedule_name
   schedule_type = "uptime"
   time_zone     = var.schedule_time_zone
 

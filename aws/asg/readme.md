@@ -73,6 +73,7 @@ No modules.
 | hostedzone | Hosted zone id to use for application routing. If not set will use default ALB url | `string` | `null` | no |
 | name | A unique key to use for all resource. If not set a random name is generated | `string` | `null` | no |
 | region | AWS region to deploy resources in | `string` | `"us-west-2"` | no |
+| schedule\_name | Name for the schedule | `string` | `"this"` | no |
 | schedule\_time\_zone | Timezone for uptime schedule | `string` | `"America/Chicago"` | no |
 | vpc | ID of existing VPC | `string` | n/a | yes |
 

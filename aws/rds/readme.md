@@ -46,6 +46,7 @@ No modules.
 | [aws_security_group.allow_proxy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [harness_autostopping_aws_proxy.harness_proxy](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_aws_proxy) | resource |
 | [harness_autostopping_rule_rds.rule](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_rule_rds) | resource |
+| [harness_autostopping_schedule.this](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_schedule) | resource |
 | [random_integer.public_port](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 | [random_pet.name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [aws_rds_engine_version.postgres](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/rds_engine_version) | data source |
@@ -55,12 +56,15 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| autostopping\_schedules | Optional list of schedule repeat windows. If null, no Harness autostopping schedule will be created. | <pre>list(object({<br/>    days       = list(string)<br/>    start_time = string<br/>    end_time   = string<br/>  }))</pre> | `null` | no |
 | harness\_cloud\_connector\_id | n/a | `string` | `"AWS CCM connector for target AWS account"` | no |
 | harness\_proxy\_api\_key | n/a | `string` | `"pat.AM8HCbDiTXGQNrTIhNl7qQ.68bee55116344d7b8dad4ff7.Oni91Bw4TiGGjRXtwEeG"` | no |
 | name | A unique key to use for all resource. If not set a random name is generated | `string` | `null` | no |
 | proxy\_subnet | Subnet to place proxy in. Should be routable so you can access the application | `string` | n/a | yes |
 | rds\_subnets | Subnets to place RDS in | `list(string)` | n/a | yes |
 | region | AWS region to deploy resources in | `string` | `"us-west-2"` | no |
+| schedule\_name | Name for the schedule | `string` | `"this"` | no |
+| schedule\_time\_zone | Timezone for uptime schedule | `string` | `"America/Chicago"` | no |
 | vpc | ID of existing VPC | `string` | n/a | yes |
 
 ## Outputs

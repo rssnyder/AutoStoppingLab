@@ -51,6 +51,7 @@ No modules.
 | [aws_security_group.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [harness_autostopping_aws_alb.harness_alb](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_aws_alb) | resource |
 | [harness_autostopping_rule_vm.rule](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_rule_vm) | resource |
+| [harness_autostopping_schedule.this](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/resources/autostopping_schedule) | resource |
 | [random_pet.name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) | resource |
 | [aws_route53_zone.zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 | [harness_platform_current_account.current](https://registry.terraform.io/providers/harness/harness/0.37.1/docs/data-sources/platform_current_account) | data source |
@@ -62,11 +63,14 @@ No modules.
 | alb\_arn | An existing ALB arn to use. If not set one will be created for you | `string` | `null` | no |
 | alb\_subnets | Subnet to place ALB in. Should be routable so you can access the application | `list(string)` | n/a | yes |
 | ami | Ubuntu ami (default is for us-west-2) | `string` | `"ami-0efcece6bed30fd98"` | no |
+| autostopping\_schedules | Optional list of schedule repeat windows. If null, no Harness autostopping schedule will be created. | <pre>list(object({<br/>    days       = list(string)<br/>    start_time = string<br/>    end_time   = string<br/>  }))</pre> | `null` | no |
 | ec2\_subnet | Subnet to place EC2 in | `string` | n/a | yes |
 | harness\_cloud\_connector\_id | n/a | `string` | `"AWS CCM connector for target AWS account"` | no |
 | hostedzone | Hosted zone id to use for application routing. If not set will use default ALB url | `string` | `null` | no |
 | name | A unique key to use for all resource. If not set a random name is generated | `string` | `null` | no |
 | region | AWS region to deploy resources in | `string` | `"us-west-2"` | no |
+| schedule\_name | Name for the schedule | `string` | `"this"` | no |
+| schedule\_time\_zone | Timezone for uptime schedule | `string` | `"America/Chicago"` | no |
 | vpc | ID of existing VPC | `string` | n/a | yes |
 
 ## Outputs

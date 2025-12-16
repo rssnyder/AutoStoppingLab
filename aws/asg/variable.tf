@@ -48,6 +48,12 @@ variable "harness_cloud_connector_id" {
   default = "AWS CCM connector for target AWS account"
 }
 
+variable "schedule_name" {
+  type        = string
+  description = "Name for the schedule"
+  default     = "this"
+}
+
 variable "autostopping_schedules" {
   type = list(object({
     days       = list(string)
