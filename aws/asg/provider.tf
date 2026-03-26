@@ -3,7 +3,7 @@ terraform {
     harness = {
       source = "harness/harness"
       # must be at least 0.39.1 for asg support
-      version = ">= 0.39.1"
+      version = "~> 0.41.8"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -17,4 +17,3 @@ provider "harness" {}
 provider "aws" {
   region = var.region
 }
-
