@@ -68,6 +68,13 @@ resource "aws_lb_listener_rule" "target" {
       values = [local.lb_hostname]
     }
   }
+
+  # To account for action that AutoStopping adds
+  lifecycle {
+    ignore_changes = [
+      action,
+    ]
+  }
 }
 
 # configure a target group for our ALB that forwards traffic to our EC2 on port 80
