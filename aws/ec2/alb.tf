@@ -54,8 +54,13 @@ resource "aws_lb_listener_rule" "target" {
   priority     = 100
 
   action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.http.arn
+    type = "forward"
+    forward {
+      target_group {
+        arn    = aws_lb_target_group.http.arn
+        weight = 50
+      }
+    }
   }
 
   condition {
