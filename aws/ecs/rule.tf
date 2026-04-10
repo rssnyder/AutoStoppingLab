@@ -2,7 +2,6 @@
 resource "harness_autostopping_aws_alb" "harness_alb" {
   name               = "${local.name}-lb"
   cloud_connector_id = var.harness_cloud_connector_id
-  host_name          = local.lb_hostname
   alb_arn            = var.alb_arn == null ? aws_lb.alb[0].arn : var.alb_arn
   region             = var.region
   vpc                = var.vpc
