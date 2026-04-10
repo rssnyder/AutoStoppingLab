@@ -8,4 +8,9 @@ vpc = "vpc-02767cb7b8b634d54"
 
 ami = "ami-075686beab831bb7f"
 
+# ECS-optimized Amazon Linux 2 AMI (find latest at https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html)
+ecs_ami = "ami-0e5f882be1900e43b"
+
+# instance_type = "t3.micro"
+
 harness_cloud_connector_id = "harness_impeng_play_ccm"

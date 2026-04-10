@@ -1,6 +1,6 @@
 output "name" {
   value       = local.name
-  description = "Name of the ec2 instance"
+  description = "Name of the ECS cluster"
 }
 
 # output "alb-url" {
@@ -8,9 +8,14 @@ output "name" {
 #   description = "URL of the ALB"
 # }
 
+output "ecs_instance" {
+  value       = aws_instance.ecs.id
+  description = "ID of the ECS container instance"
+}
+
 output "service" {
   value       = aws_ecs_service.service.id
-  description = "ARN of the ECS service"
+  description = "ID of the ECS service"
 }
 
 # output "rule" {

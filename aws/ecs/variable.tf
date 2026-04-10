@@ -9,9 +9,9 @@ variable "alb_subnets" {
   description = "Subnet to place ALB in. Should be routable so you can access the application"
 }
 
-variable "ecs_subnets" {
-  type        = list(string)
-  description = "Subnet to place ECS in"
+variable "ec2_subnet" {
+  type        = string
+  description = "Subnet to place ECS container instance in"
 }
 
 variable "vpc" {
@@ -29,6 +29,18 @@ variable "ami" {
   type        = string
   default     = "ami-0efcece6bed30fd98"
   description = "Ubuntu ami (default is for us-west-2)"
+}
+
+variable "ecs_ami" {
+  type        = string
+  default     = "ami-0e5f882be1900e43b"
+  description = "ECS-optimized Amazon Linux 2 AMI (default is for us-west-2)"
+}
+
+variable "instance_type" {
+  type        = string
+  default     = "t3.micro"
+  description = "EC2 instance type for ECS container instance"
 }
 
 variable "hostedzone" {
